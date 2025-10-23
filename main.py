@@ -1,4 +1,4 @@
-# Imports
+# imports
 from pygame import init as init_game, quit as quit_game, QUIT as QUIT_GAME
 from pygame.display import (
     set_caption as set_display_caption,
@@ -6,36 +6,38 @@ from pygame.display import (
 )
 from pygame.event import get as get_event
 
-# Screen settings
+# screen settings
 HEIGHT = 300
 WIDTH = 400
 CAPTION = "DT502G Project - The Game"
 
 
-# Init runs once
 def init():
-    # Init
+    "init runs once"
+
+    # init game
     init_game()
 
     screen = set_display_mode((WIDTH, HEIGHT))
     set_display_caption(CAPTION)
 
 
-# Loop runs continuously
 def loop():
-    # Game loop
+    "loop runs continuously"
+
+    # game main loop
     loop_should_break = False
     while not loop_should_break:
         for event in get_event():
             if event.type == QUIT_GAME:
                 loop_should_break = True
 
-    # Quit
+    # quit game
     quit_game()
 
 
-# Program main entry point
 def main():
+    "Program main entry point."
     init()
     loop()
 
