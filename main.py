@@ -18,7 +18,7 @@ def init():
     # init game
     init_game()
 
-    screen = set_display_mode((WIDTH, HEIGHT))
+    set_display_mode((WIDTH, HEIGHT))
     set_display_caption(CAPTION)
 
 
