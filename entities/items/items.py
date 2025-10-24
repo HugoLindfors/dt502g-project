@@ -1,7 +1,7 @@
 from pygame import image
 from pygame import transform
-
-class Item:
+from pygame import rect
+class item:
 
     def __init__(
         self,
@@ -17,11 +17,12 @@ class Item:
         self.height = height
         self.x = x
         self.y = y
+        self.rect = rect.Rect(x,y,width,height)
         try:
             self.image = image.load(img_path)
             self.image = transform.scale(self.image, (self.width, self.height))
         except image.error as e:
-            print(f"Failed to load image at {img_path}: {e}")
+            print(f"No image at {img_path}: {e}")
             self.image = image.surface((self.width, self.height))
 
     def __str__(self):
@@ -33,6 +34,17 @@ class Item:
     def set_position(self, x: int, y: int) -> None:
         self.x = x
         self.y = y
+        self.move_entity()
+    
+    def move_entity(self) -> None:
+        x,y = self.get_position()
+        hitbox = self.get_rect()
+        hitbox.move
+        
+
+
+    def get_rect(self)-> rect:
+        return self.rect
 
     def check_collision(self, player_pos: tuple[int, int]) -> bool:
         player_x, player_y = player_pos
