@@ -1,6 +1,8 @@
 import pygame
+from pygame import display, event, image, key, transform
+from pygame.time import Clock
 
-# Define some colors
+# --- STATIC VARIABLES ---
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
@@ -8,34 +10,33 @@ RED = (255, 0, 0)
 
 pygame.init()
 
-# --- Screen Setup ---
-info = pygame.display.Info()
-screen_width, screen_height = info.current_w, info.current_h  # Get full display size
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.NOFRAME)
-pygame.display.set_caption("DT502G Project - The Game")
+# SCREEN SETUP
+info = display.Info()
+SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h  # Get full display size
+screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
+display.set_caption("DT502G Project - The Game")
 
-# --- Load and Scale Player Image ---
-player_img = pygame.image.load("img/player.png").convert_alpha()
+# LOAD AND SCALE PLAYER IMAGE
+player_img = image.load("img/player.png").convert_alpha()
 
-# Resize image
-player_img = pygame.transform.scale(player_img, (80, 80))
+# RESIZE IMAGE
+player_img = transform.scale(player_img, (80, 80))
 player_width, player_height = player_img.get_size()
 
 
 x, y = 200, 200
 vel = 10
 
-# --- Main Loop ---
-done = False
-clock = pygame.time.Clock()
+loop_should_break = False
+clock = Clock()
 
-while not done:
+while not loop_should_break:
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for evt in event.get():
+        if evt.type == pygame.QUIT:
             done = True
 
-    keys = pygame.key.get_pressed()
+    keys = key.get_pressed()
     if keys[pygame.K_ESCAPE]:
         done = True
 
@@ -57,21 +58,16 @@ while not done:
 
     x += dx * vel
     y += dy * vel
-    x = max(0, min(screen_width - player_width, x))
-    y = max(0, min(screen_height - player_height, y))
+    x = max(0, min(SCREEN_WIDTH - player_width, x))
+    y = max(0, min(SCREEN_HEIGHT - player_height, y))
 
     screen.fill(GREEN)
     screen.blit(player_img, (x, y))
 
     # --- Drawing code should go here
-    # pygame.draw.rect(screen,RED,(x,y,rect_width,rect_height)) #(förflyttning i x-led, förflyttning i y-led, bredd, höjd)
 
-    # update the screen with what we've drawn.
-    pygame.display.flip()
+    display.flip()
 
     clock.tick(60)
 
 pygame.quit()
-
-
-#black formatter alt+shift+f
