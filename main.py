@@ -25,11 +25,11 @@ screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
 display.set_caption("DT502G Project - The Game")
 
 # LOAD AND SCALE PLAYER IMAGE
-player_img = image.load("img/player.png").convert_alpha()
+player_image = image.load("images/player.png").convert_alpha()
 
 # RESIZE IMAGE
-player_img = transform.scale(player_img, (80, 80))
-player_width, player_height = player_img.get_size()
+player_image = transform.scale(player_image, (80, 80))
+player_width, player_height = player_image.get_size()
 
 
 x, y = 200, 200
@@ -57,8 +57,18 @@ while not loop_should_break:
         dy = -1
     if keys[pygame.K_s]:
         dy = 1
+    if keys[pygame.K_LSHIFT]:
+        if v == 10:
+            v = 20
+        else:
+            v = 10
+    if keys[pygame.K_LCTRL]:
+        if v == 10:
+            v = 5
+        else:
+            v = 10
 
-    if dx != 0 and dy != 0:
+    if dx and dy:
         dx *= 0.7071
         dy *= 0.7071
 
@@ -68,7 +78,7 @@ while not loop_should_break:
     y = max(0, min(SCREEN_HEIGHT - player_height, y))
 
     screen.fill(GREEN)
-    screen.blit(player_img, (x, y))
+    screen.blit(player_image, (x, y))
 
     # drawing code should go here
 
