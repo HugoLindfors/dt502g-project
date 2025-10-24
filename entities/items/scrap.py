@@ -1,6 +1,6 @@
-from entities.items.items import item
+from entities.items.items import Item
 
-class scrap(item):
+class Scrap(Item):
 
     def __init__(self):
         pass
