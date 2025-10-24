@@ -1,3 +1,4 @@
+from math import sqrt
 import pygame
 from pygame import display, event, image, key, transform
 from pygame.time import Clock
@@ -19,8 +20,7 @@ pygame.init()
 
 # SCREEN SETUP
 info = display.Info()
-SCREEN_WIDTH = info.current_w
-SCREEN_HEIGHT = info.current_h
+SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
 display.set_caption("DT502G Project - The Game")
 
@@ -69,8 +69,8 @@ while not loop_should_break:
             v = 10
 
     if dx and dy:
-        dx *= 0.7071
-        dy *= 0.7071
+        dx *= 1 / sqrt(2)
+        dy *= 1 / sqrt(2)
 
     x += dx * v
     y += dy * v
