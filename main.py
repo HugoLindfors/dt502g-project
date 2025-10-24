@@ -7,50 +7,60 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
  
 pygame.init()
-screen_width = 700
-screen_height = 500
-# Set the width and height of the screen [width, height]
-#size = (700, 500)
 
-screen = pygame.display.set_mode((screen_width,screen_height))
- 
+# --- Screen Setup ---
+info = pygame.display.Info()
+screen_width, screen_height = info.current_w, info.current_h  # Get full display size
+screen = pygame.display.set_mode((screen_width, screen_height), pygame.NOFRAME)
 pygame.display.set_caption("DT502G Project - The Game")
 
+# --- Load and Scale Player Image ---
+player_img = pygame.image.load('img/player.png').convert_alpha()
 
-# Loop until the user clicks the close button.
-done = False
- 
-# Used to manage how fast the screen updates
-clock = pygame.time.Clock()
-x = 200
-y = 200
+# Resize image (change 80, 80 to any size you want)
+player_img = pygame.transform.scale(player_img, (80, 80))
+player_width, player_height = player_img.get_size()
+
+
+x, y = 200, 200
 vel = 10
-rect_width = 20
-rect_height = 20
 
-# -------- Main Program Loop -----------
+# --- Main Loop ---
+done = False
+clock = pygame.time.Clock()
+
 while not done:
-    # --- Main event loop
-    screen.fill(GREEN)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
  
-    # --- Game logic should go here
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and x>0: 
-        x -= vel 
-		
-    if keys[pygame.K_RIGHT] and x<screen_width-rect_width: 
-        x += vel 
-		
-    if keys[pygame.K_UP] and y>0: 
-        y -= vel 
-		
-    if keys[pygame.K_DOWN] and y<screen_height-rect_height: 
-        y += vel
-    # --- Screen-clearing code goes here
+    if keys[pygame.K_ESCAPE]:
+        done = True
+
+        
+    dx, dy = 0, 0
+    if keys[pygame.K_LEFT]:
+        dx = -1
+    if keys[pygame.K_RIGHT]:
+        dx = 1
+    if keys[pygame.K_UP]:
+        dy = -1
+    if keys[pygame.K_DOWN]:
+        dy = 1
+
+    if dx != 0 and dy != 0:
+        dx *= 0.7071  # 1/sqrt(2)
+        dy *= 0.7071
+
+    x += dx * vel
+    y += dy * vel
+    x = max(0, min(screen_width - player_width, x))
+    y = max(0, min(screen_height - player_height, y))
     
+    screen.fill(WHITE)
+    screen.blit(player_img, (x, y))
 
     
     # Here, we clear the screen to white. Don't put other drawing commands
@@ -59,10 +69,11 @@ while not done:
     # If you want a background image, replace this clear with blit'ing the
     # background image.
   
-    screen.fill(WHITE)
+    
  
     # --- Drawing code should go here
-    pygame.draw.rect(screen,RED,(x,y,rect_width,rect_height)) #(förflyttning i x-led, förflyttning i y-led, bredd, höjd)
+    # pygame.draw.rect(screen,RED,(x,y,rect_width,rect_height)) #(förflyttning i x-led, förflyttning i y-led, bredd, höjd)
+    
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
  
