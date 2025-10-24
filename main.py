@@ -2,6 +2,7 @@ import pygame
 from pygame import display, event, image, key, transform
 from pygame.time import Clock
 
+
 # STATIC VARIABLES
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -12,6 +13,7 @@ CYAN = (0, 255, 255)
 BLUE = (0, 0, 255)
 MAGENTA = (255, 0, 255)
 WHITE = (255, 255, 255)
+
 
 pygame.init()
 
@@ -31,7 +33,7 @@ player_width, player_height = player_img.get_size()
 
 
 x, y = 200, 200
-vel = 10
+v = 10
 
 loop_should_break = False
 clock = Clock()
@@ -40,7 +42,7 @@ while not loop_should_break:
 
     for evt in event.get():
         if evt.type == pygame.QUIT:
-            done = True
+            loop_should_break = True
 
     keys = key.get_pressed()
     if keys[pygame.K_ESCAPE]:
@@ -56,21 +58,19 @@ while not loop_should_break:
     if keys[pygame.K_s]:
         dy = 1
 
-    if (
-        dx != 0 and dy != 0
-    ):  # diagonal movement correction (would be too fast otherwise)
-        dx *= 0.7071  # 1/sqrt(2)
+    if dx != 0 and dy != 0:
+        dx *= 0.7071
         dy *= 0.7071
 
-    x += dx * vel
-    y += dy * vel
+    x += dx * v
+    y += dy * v
     x = max(0, min(SCREEN_WIDTH - player_width, x))
     y = max(0, min(SCREEN_HEIGHT - player_height, y))
 
     screen.fill(GREEN)
     screen.blit(player_img, (x, y))
 
-    # --- Drawing code should go here
+    # drawing code should go here
 
     display.flip()
 
