@@ -2,17 +2,23 @@ import pygame
 from pygame import display, event, image, key, transform
 from pygame.time import Clock
 
-# --- STATIC VARIABLES ---
+# STATIC VARIABLES
 BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+ORANGE = (255, 127, 0)
+YELLOW = (255, 255, 0)
+GREEN = (0, 255, 0)
+CYAN = (0, 255, 255)
+BLUE = (0, 0, 255)
+MAGENTA = (255, 0, 255)
+WHITE = (255, 255, 255)
 
 pygame.init()
 
 # SCREEN SETUP
 info = display.Info()
-SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h  # Get full display size
+SCREEN_WIDTH = info.current_w
+SCREEN_HEIGHT = info.current_h
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
 display.set_caption("DT502G Project - The Game")
 
