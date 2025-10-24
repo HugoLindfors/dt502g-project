@@ -1,4 +1,5 @@
 # imports
+from pygame import FULLSCREEN
 from pygame import init as init_game, quit as quit_game, QUIT as QUIT_GAME
 from pygame.display import (
     set_caption as set_display_caption,
@@ -7,8 +8,6 @@ from pygame.display import (
 from pygame.event import get as get_event
 
 # screen settings
-HEIGHT = 300
-WIDTH = 400
 CAPTION = "DT502G Project - The Game"
 
 
@@ -18,7 +17,7 @@ def init():
     # init game
     init_game()
 
-    set_display_mode((WIDTH, HEIGHT))
+    set_display_mode((0,0),FULLSCREEN)
     set_display_caption(CAPTION)
 
 
