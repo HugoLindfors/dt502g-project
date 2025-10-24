@@ -56,10 +56,8 @@ while not loop_should_break:
     if keys[pygame.K_s]:
         dy = 1
 
-    if (
-        dx != 0 and dy != 0
-    ):  # diagonal movement correction (would be too fast otherwise)
-        dx *= 0.7071  # 1/sqrt(2)
+    if dx != 0 and dy != 0:
+        dx *= 0.7071
         dy *= 0.7071
 
     x += dx * vel
@@ -70,7 +68,7 @@ while not loop_should_break:
     screen.fill(GREEN)
     screen.blit(player_img, (x, y))
 
-    # --- Drawing code should go here
+    # drawing code should go here
 
     display.flip()
 
