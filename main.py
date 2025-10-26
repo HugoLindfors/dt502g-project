@@ -46,7 +46,7 @@ while not loop_should_break:
 
     keys = key.get_pressed()
     if keys[pygame.K_ESCAPE]:
-        done = True
+        loop_should_break = True
 
     dx, dy = 0, 0
     if keys[pygame.K_a]:
