@@ -1,3 +1,12 @@
+import sys
+import os
+
+"""
+This allows the code to omit the first modules folder from the imports, i.e. import entities instead of import modules.entities.
+"""
+modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules"))
+sys.path.insert(0, modules_path)
+
 from math import sqrt
 import pygame
 from pygame import display, event, image, key, transform
