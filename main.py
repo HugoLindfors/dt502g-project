@@ -38,14 +38,6 @@ vel = 10
 loop_should_break = False
 clock = Clock()
 
-cos = Item(
-    "cos",
-    "img\plaer.png",
-    100,
-    100,
-    10,
-    10)
-
 
 while not loop_should_break:
 
@@ -78,13 +70,12 @@ while not loop_should_break:
     y += dy * vel
     x = max(0, min(SCREEN_WIDTH - player_width, x))
     y = max(0, min(SCREEN_HEIGHT - player_height, y))
+
     player_rect = player_img.get_rect(topleft=(x, y))
     screen.fill(GREEN)
     screen.blit(player_img, (x, y))
-    cos.draw_item(screen)
-    # --- Drawing code should go here
-    if cos.check_collision(player_rect):
-        print("yepp")
+    
+
 
     display.flip()
 
