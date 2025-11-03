@@ -1,113 +1,35 @@
-<<<<<<< HEAD
 import sys
 import os
 
 """
 This allows the code to omit the first modules folder from the imports, i.e. import entities instead of import modules.entities.
 """
-modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules"))
-sys.path.insert(0, modules_path)
+module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules"))
+sys.path.insert(0, module_path)
 
-from math import sqrt
-=======
-
->>>>>>> 25965954d604bedba3898d646e06cd7f0a49d5e1
 import pygame
-from pygame import display, event, image, key, transform
+from pygame.display import Info as GetVidInfo
+from pygame import display, event, NOFRAME
 from pygame.time import Clock
-from entities.items.items import Item
-
-
-# STATIC VARIABLES
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-ORANGE = (255, 127, 0)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 0)
-CYAN = (0, 255, 255)
-BLUE = (0, 0, 255)
-MAGENTA = (255, 0, 255)
-WHITE = (255, 255, 255)
-
+from colors import *
+from keybindings import *
 
 pygame.init()
 
 # SCREEN SETUP
-info = display.Info()
-SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
-screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
+_vidinfo = GetVidInfo()
+SCREEN_WIDTH, SCREEN_HEIGHT = _vidinfo.current_w, _vidinfo.current_h
+screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), NOFRAME)
 display.set_caption("DT502G Project - The Game")
 
-# LOAD AND SCALE PLAYER IMAGE
-player_image = image.load("images/player.png").convert_alpha()
 
-# RESIZE IMAGE
-player_image = transform.scale(player_image, (80, 80))
-player_width, player_height = player_image.get_size()
-
-
-x, y = 200, 200
-v = 10
-
-loop_should_break = False
+loop_should_break = bool(False)
 clock = Clock()
 
-
 while not loop_should_break:
-
-
     for evt in event.get():
         if evt.type == pygame.QUIT:
             loop_should_break = True
-
-    keys = key.get_pressed()
-    if keys[pygame.K_ESCAPE]:
-        loop_should_break = True
-
-    dx, dy = 0, 0
-    if keys[pygame.K_a]:
-        dx = -1
-    if keys[pygame.K_d]:
-        dx = 1
-    if keys[pygame.K_w]:
-        dy = -1
-    if keys[pygame.K_s]:
-        dy = 1
-    if keys[pygame.K_LSHIFT]:
-        if v == 10:
-            v = 20
-        else:
-            v = 10
-    if keys[pygame.K_LCTRL]:
-        if v == 10:
-            v = 5
-        else:
-            v = 10
-
-    if dx and dy:
-        dx *= 1 / sqrt(2)
-        dy *= 1 / sqrt(2)
-
-    x += dx * v
-    y += dy * v
-    x = max(0, min(SCREEN_WIDTH - player_width, x))
-    y = max(0, min(SCREEN_HEIGHT - player_height, y))
-
-    player_rect = player_img.get_rect(topleft=(x, y))
-    screen.fill(GREEN)
-<<<<<<< HEAD
-    screen.blit(player_image, (x, y))
-
-    # drawing code should go here
-=======
-    screen.blit(player_img, (x, y))
-    
-
->>>>>>> 25965954d604bedba3898d646e06cd7f0a49d5e1
-
-    display.flip()
-
     clock.tick(60)
 
 pygame.quit()
-
