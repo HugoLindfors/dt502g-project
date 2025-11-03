@@ -1,98 +1,65 @@
-import sys
-import os
-
-"""
-This allows the code to omit the first modules folder from the imports, i.e. import entities instead of import modules.entities.
-"""
-modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules"))
-sys.path.insert(0, modules_path)
-
-from math import sqrt
+from modules.entities.player import player
+from modules.menu import Menu
 import pygame
-from pygame import display, event, image, key, transform
+from pygame import display, event, key
 from pygame.time import Clock
-
-
-# STATIC VARIABLES
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-ORANGE = (255, 127, 0)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 0)
-CYAN = (0, 255, 255)
-BLUE = (0, 0, 255)
-MAGENTA = (255, 0, 255)
-WHITE = (255, 255, 255)
-
 
 pygame.init()
 
 # SCREEN SETUP
 info = display.Info()
 SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
-screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
-display.set_caption("DT502G Project - The Game")
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
+pygame.display.set_caption("DT502G Project - The Game")
 
-# LOAD AND SCALE PLAYER IMAGE
-player_image = image.load("images/player.png").convert_alpha()
+# CREATE PLAYER INSTANCE
+player = player.Player(200, SCREEN_HEIGHT - 80 - 20, "images/player.png")  # x, y, image_path
 
-# RESIZE IMAGE
-player_image = transform.scale(player_image, (80, 80))
-player_width, player_height = player_image.get_size()
+# CREATE MENU INSTANCE
+menu = Menu(screen, SCREEN_WIDTH, SCREEN_HEIGHT, "images/game_logo.png", "images/star.png", num_stars=50)
 
-
-x, y = 200, 200
-v = 10
-
+# GAME STATE
 loop_should_break = False
+game_started = False
 clock = Clock()
 
+# MAIN LOOP
 while not loop_should_break:
 
+    # --- Event handling ---
     for evt in event.get():
         if evt.type == pygame.QUIT:
             loop_should_break = True
+        elif evt.type == pygame.KEYDOWN:
+            if not game_started:
+                if evt.key == pygame.K_RETURN:
+                    game_started = True
+                elif evt.key == pygame.K_ESCAPE:
+                    loop_should_break = True
+            else:
+                if evt.key == pygame.K_ESCAPE:
+                    loop_should_break = True
 
-    keys = key.get_pressed()
-    if keys[pygame.K_ESCAPE]:
-        loop_should_break = True
+    # --- Start menu ---
+    if not game_started:
+        menu.draw()
+        clock.tick(60)
+        continue
 
-    dx, dy = 0, 0
-    if keys[pygame.K_a]:
-        dx = -1
-    if keys[pygame.K_d]:
-        dx = 1
-    if keys[pygame.K_w]:
-        dy = -1
-    if keys[pygame.K_s]:
-        dy = 1
-    if keys[pygame.K_LSHIFT]:
-        if v == 10:
-            v = 20
-        else:
-            v = 10
-    if keys[pygame.K_LCTRL]:
-        if v == 10:
-            v = 5
-        else:
-            v = 10
+    # --- Player movement ---
+    keys_pressed = key.get_pressed()
+    player.handle_movement(keys_pressed, SCREEN_WIDTH)
 
-    if dx and dy:
-        dx *= 1 / sqrt(2)
-        dy *= 1 / sqrt(2)
-
-    x += dx * v
-    y += dy * v
-    x = max(0, min(SCREEN_WIDTH - player_width, x))
-    y = max(0, min(SCREEN_HEIGHT - player_height, y))
-
-    screen.fill(GREEN)
-    screen.blit(player_image, (x, y))
+    # --- Drawing code ---
+    screen.fill((0, 255, 0))
+    player.draw(screen)
 
     # drawing code should go here
 
     display.flip()
 
+    # --- Limit to 60 frames per second ---
     clock.tick(60)
 
+# Close the window and quit.
 pygame.quit()
