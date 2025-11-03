@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import sys
 import os
 
@@ -8,9 +9,13 @@ modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules"
 sys.path.insert(0, modules_path)
 
 from math import sqrt
+=======
+
+>>>>>>> 25965954d604bedba3898d646e06cd7f0a49d5e1
 import pygame
 from pygame import display, event, image, key, transform
 from pygame.time import Clock
+from entities.items.items import Item
 
 
 # STATIC VARIABLES
@@ -47,7 +52,9 @@ v = 10
 loop_should_break = False
 clock = Clock()
 
+
 while not loop_should_break:
+
 
     for evt in event.get():
         if evt.type == pygame.QUIT:
@@ -86,13 +93,21 @@ while not loop_should_break:
     x = max(0, min(SCREEN_WIDTH - player_width, x))
     y = max(0, min(SCREEN_HEIGHT - player_height, y))
 
+    player_rect = player_img.get_rect(topleft=(x, y))
     screen.fill(GREEN)
+<<<<<<< HEAD
     screen.blit(player_image, (x, y))
 
     # drawing code should go here
+=======
+    screen.blit(player_img, (x, y))
+    
+
+>>>>>>> 25965954d604bedba3898d646e06cd7f0a49d5e1
 
     display.flip()
 
     clock.tick(60)
 
 pygame.quit()
+
