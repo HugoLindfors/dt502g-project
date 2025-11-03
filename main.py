@@ -1,43 +1,61 @@
-import pygame
+import sys
+import os
 
-# Define some colors
+"""
+This allows the code to omit the first modules folder from the imports, i.e. import entities instead of import modules.entities.
+"""
+modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules"))
+sys.path.insert(0, modules_path)
+
+from math import sqrt
+import pygame
+from pygame import display, event, image, key, transform
+from pygame.time import Clock
+
+
+# STATIC VARIABLES
 BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+ORANGE = (255, 127, 0)
+YELLOW = (255, 255, 0)
+GREEN = (0, 255, 0)
+CYAN = (0, 255, 255)
+BLUE = (0, 0, 255)
+MAGENTA = (255, 0, 255)
+WHITE = (255, 255, 255)
+
 
 pygame.init()
 
-# --- Screen Setup ---
-info = pygame.display.Info()
-screen_width, screen_height = info.current_w, info.current_h  # Get full display size
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.NOFRAME)
-pygame.display.set_caption("DT502G Project - The Game")
+# SCREEN SETUP
+info = display.Info()
+SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
+screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
+display.set_caption("DT502G Project - The Game")
 
-# --- Load and Scale Player Image ---
-player_img = pygame.image.load("img/player.png").convert_alpha()
+# LOAD AND SCALE PLAYER IMAGE
+player_image = image.load("images/player.png").convert_alpha()
 
-# Resize image
-player_img = pygame.transform.scale(player_img, (80, 80))
-player_width, player_height = player_img.get_size()
+# RESIZE IMAGE
+player_image = transform.scale(player_image, (80, 80))
+player_width, player_height = player_image.get_size()
 
 
 x, y = 200, 200
-vel = 10
+v = 10
 
-# --- Main Loop ---
-done = False
-clock = pygame.time.Clock()
+loop_should_break = False
+clock = Clock()
 
-while not done:
+while not loop_should_break:
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
+    for evt in event.get():
+        if evt.type == pygame.QUIT:
+            loop_should_break = True
 
-    keys = pygame.key.get_pressed()
+    keys = key.get_pressed()
     if keys[pygame.K_ESCAPE]:
-        done = True
+        loop_should_break = True
 
     dx, dy = 0, 0
     if keys[pygame.K_a]:
@@ -48,30 +66,33 @@ while not done:
         dy = -1
     if keys[pygame.K_s]:
         dy = 1
+    if keys[pygame.K_LSHIFT]:
+        if v == 10:
+            v = 20
+        else:
+            v = 10
+    if keys[pygame.K_LCTRL]:
+        if v == 10:
+            v = 5
+        else:
+            v = 10
 
-    if (
-        dx != 0 and dy != 0
-    ):  # diagonal movement correction (would be too fast otherwise)
-        dx *= 0.7071  # 1/sqrt(2)
-        dy *= 0.7071
+    if dx and dy:
+        dx *= 1 / sqrt(2)
+        dy *= 1 / sqrt(2)
 
-    x += dx * vel
-    y += dy * vel
-    x = max(0, min(screen_width - player_width, x))
-    y = max(0, min(screen_height - player_height, y))
+    x += dx * v
+    y += dy * v
+    x = max(0, min(SCREEN_WIDTH - player_width, x))
+    y = max(0, min(SCREEN_HEIGHT - player_height, y))
 
     screen.fill(GREEN)
-    screen.blit(player_img, (x, y))
+    screen.blit(player_image, (x, y))
 
-    # --- Drawing code should go here
-    # pygame.draw.rect(screen,RED,(x,y,rect_width,rect_height)) #(förflyttning i x-led, förflyttning i y-led, bredd, höjd)
+    # drawing code should go here
 
-    # update the screen with what we've drawn.
-    pygame.display.flip()
+    display.flip()
 
     clock.tick(60)
 
 pygame.quit()
-
-
-#black formatter alt+shift+f
