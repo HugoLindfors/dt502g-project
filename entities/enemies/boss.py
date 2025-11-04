@@ -1,13 +1,18 @@
 from entities import Enemy
 
-class Boss(Enemy):
+"""enemy.py: A special case of the class enemy"""
 
-    health = 30
-    start_x = 0
-    start_y = 0
+__author__ = "Gustav Vising"
+
+class Boss(Enemy):
 
     def __init__(self):
         super().__init__()
 
-        self.setHealth(self.health)
-        self.setPosition(self.start_x, self.start_y)
+        name = "Boss"
+        img_path = "images/boss.jpg"
+        width = 100
+        height = 100
+        x = 50
+        y = 50
+        health = 30
