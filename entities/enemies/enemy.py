@@ -1,4 +1,6 @@
 from entities import Entity
+from entities.items import Item
+from entities.items import Scrap
 import threading
 import time
 
@@ -77,9 +79,14 @@ class Enemy(Entity):
         while not self.alive_event.is_set():
             with self.health_lock:
                 if self.enemy_health <= 0:
-                    # Stop all activity
+                    # Stop all activity for the enemy
                     self.alive_event.set()
-                    # TODO: Turn the entity into a scrap
+                    # Turn the enemy into a scrap
+                    scrap = Scrap(Item())
+                    scrap.x = self.x
+                    scrap.y = self.y
+                    # Remove the enemy
+                    # Code to access the entity list and remove the enemy goes here
                     break
             time.sleep(self.tick)
 
