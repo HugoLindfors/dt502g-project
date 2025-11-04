@@ -14,22 +14,27 @@ from pygame.time import Clock
 from colors import *
 from keybindings import *
 
-pygame.init()
 
-# SCREEN SETUP
-_vidinfo = GetVidInfo()
-SCREEN_WIDTH, SCREEN_HEIGHT = _vidinfo.current_w, _vidinfo.current_h
-screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), NOFRAME)
-display.set_caption("DT502G Project - The Game")
+def main():
+    pygame.init()
+
+    # SCREEN SETUP
+    _vidinfo = GetVidInfo()
+    SCREEN_WIDTH, SCREEN_HEIGHT = _vidinfo.current_w, _vidinfo.current_h
+    screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), NOFRAME)
+    display.set_caption("DT502G Project - The Game")
+
+    loop_should_break = bool(False)
+    clock = Clock()
+
+    while not loop_should_break:
+        for evt in event.get():
+            if evt.type == pygame.QUIT:
+                loop_should_break = True
+        clock.tick(60)
+
+    pygame.quit()
 
 
-loop_should_break = bool(False)
-clock = Clock()
-
-while not loop_should_break:
-    for evt in event.get():
-        if evt.type == pygame.QUIT:
-            loop_should_break = True
-    clock.tick(60)
-
-pygame.quit()
+if __name__ == "__main__":
+    main()
