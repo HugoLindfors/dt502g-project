@@ -18,9 +18,9 @@ class Enemy(Entity):
     enemy_maximum_allowed_left = -1
 
     # Constants
-    enemy_delay_between_fire = 3  # seconds between firing projectiles
-    enemy_maximum_horizontal_movement = 10  # both left and right from the spawn position
-    enemy_y_moving_direction = -1 # the enemy moves downwards
+    enemy_delay_between_fire = 3  # Seconds between firing projectiles
+    enemy_maximum_horizontal_movement = 10  # Both left and right from the spawn position
+    enemy_y_moving_direction = -1 # The enemy moves downwards
 
     # Changing variables
     enemy_x_moving_direction = -1
@@ -60,6 +60,7 @@ class Enemy(Entity):
         self.fire_thread.start()
         self.alive_thread.start()
 
+    """ Update the enemy location """
     def move(self):
         while not self.alive_event.is_set():
             if self.x <= self.enemy_maximum_allowed_left:
@@ -71,14 +72,14 @@ class Enemy(Entity):
             self.y += self.enemy_y_moving_direction
             time.sleep(self.tick)
 
-    """ Lifetime of the entity """
+    """ Lifetime of the enemy """
     def alive(self):
         while not self.alive_event.is_set():
             with self.health_lock:
                 if self.enemy_health <= 0:
                     # Stop all activity
                     self.alive_event.set()
-                    # TODO: turn the entity into a scrap
+                    # TODO: Turn the entity into a scrap
                     break
             time.sleep(self.tick)
 
