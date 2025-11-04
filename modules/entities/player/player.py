@@ -1,11 +1,12 @@
 import pygame
 from pygame import image, transform
 
+
 class Player:
     def __init__(self, x, y, image_path, width=80, height=80):
         self.x = x
         self.y = y
-        self.v = 10 
+        self.v = 10
         self.image = image.load(image_path).convert_alpha()
         self.image = transform.scale(self.image, (width, height))
         self.width, self.height = self.image.get_size()
