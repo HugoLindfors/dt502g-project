@@ -44,8 +44,8 @@ class Enemy(Entity):
         self.enemy_spawn_position_y = y
 
         # Calculate values
-        self.enemy_maximum_allowed_right = x + self.max_x_leftright_move
-        self.enemy_maximum_allowed_left = x - self.max_x_leftright_move
+        self.enemy_maximum_allowed_right = x + self.enemy_maximum_allowed_right
+        self.enemy_maximum_allowed_left = x - self.enemy_maximum_allowed_left
 
         # Spawn position
         self.setPosition(x, y)
