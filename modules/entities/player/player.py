@@ -1,5 +1,5 @@
-import pygame
 from pygame import image, transform
+from modules.keybindings import *
 
 
 class Player:
@@ -11,14 +11,14 @@ class Player:
         self.image = transform.scale(self.image, (width, height))
         self.width, self.height = self.image.get_size()
 
-    def handle_movement(self, keys, screen_width):
+    def handle_movement(self, keydn, screen_width):
         dx = 0
-        if keys[pygame.K_a]:
+        if keydn[A]:
             dx = -1
-        if keys[pygame.K_d]:
+        if keydn[D]:
             dx = 1
         self.x += dx * self.v
         self.x = max(0, min(screen_width - self.width, self.x))
 
-    def draw(self, screen):
-        screen.blit(self.image, (self.x, self.y))
+    def draw(self, master):
+        master.blit(self.image, (self.x, self.y))
