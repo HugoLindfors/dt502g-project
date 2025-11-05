@@ -23,9 +23,8 @@ class Entity:
         except (error, FileNotFoundError) as e:
             print(f"No image at {img_path} > Item class error: {e}")
             self.image = Surface((width, height))
-            self.image.fill((0,0,0))
+            self.image.fill((0, 0, 0))
         Entity.entity_dic[self.name] = self
-        
 
     def __str__(self):
         return f"{self.name}"
@@ -50,10 +49,10 @@ class Entity:
     def check_collision(self) -> tuple["Entity | None", bool]:
         for key in Entity.entity_dic:
             if Entity.entity_dic[key] is not self:
-               if self.get_rect().colliderect(Entity.entity_dic[key].get_rect()):
+                if self.get_rect().colliderect(Entity.entity_dic[key].get_rect()):
                     return (Entity.entity_dic[key], True)
             else:
-                 continue
+                continue
         return (None, False)
         
 
@@ -63,4 +62,3 @@ class Entity:
 
             
 
-             

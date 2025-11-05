@@ -1,6 +1,9 @@
-from entities.items.items import Item
+from .items import Item
 from pygame import rect
-from entities.entity import Entity
+from modules.entities.entity import Entity
+
+image_path = "images/player.png"
+
 class Scrap(Item):
 
 
@@ -13,9 +16,11 @@ class Scrap(Item):
                x = 0, 
                y = 0,
                target_entity_detect = "player"
-               ):      
+               ):     
+        self.target_entity_detect = target_entity_detect 
+        self.scrap_counter = 0
         super().__init__(name, img_path, width, height, x, y)
-
+        
     def pick(self) -> int:
         e,c = self.check_collision()
         print(Entity.entity_dic)
@@ -38,4 +43,3 @@ class Scrap(Item):
 
         
 
-    

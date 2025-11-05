@@ -1,100 +1,66 @@
+import sys
+import os
 
+"""
+This allows the code to omit the first modules folder from the imports, i.e. import entities instead of import modules.entities.
+"""
+modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".modules"))
+sys.path.insert(0, modules_path)
+
+from math import sqrt
 import pygame
-from pygame import display, event, image, key, transform
+from pygame import Color, display, event, image, key, transform
 from pygame.time import Clock
-from entities.items.items import Item
-from entities.items.scrap import Scrap
-from entities.entity import Entity
-# STATIC VARIABLES
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-ORANGE = (255, 127, 0)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 0)
-CYAN = (0, 255, 255)
-BLUE = (0, 0, 255)
-MAGENTA = (255, 0, 255)
-WHITE = (255, 255, 255)
+
+from modules.entities.entity import Entity
+from modules.colors import *
+from modules.gui.menu import Menu
+
+entitity_dictionary = Entity.entity_dic
+
+BLACK = Color(0, 0, 0)
+RED = Color(255, 0, 0)
+ORANGE = Color(255, 127, 0)
+YELLOW = Color(255, 255, 0)
+GREEN = Color(0, 255, 0)
+CYAN = Color(0, 255, 255)
+BLUE = Color(0, 0, 255)
+MAGENTA = Color(255, 0, 255)
+WHITE = Color(255, 255, 255)
+
 
 pygame.init()
 
 # SCREEN SETUP
 info = display.Info()
-SCREEN_WIDTH = info.current_w
-SCREEN_HEIGHT = info.current_h
+SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
 screen = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
 display.set_caption("DT502G Project - The Game")
 
-# LOAD AND SCALE PLAYER IMAGE
-player_img = image.load("img/player.png").convert_alpha()
-
-# RESIZE IMAGE
-player_img = transform.scale(player_img, (80, 80))
-player_width, player_height = player_img.get_size()
-
-
-x, y = 200, 200
-vel = 10
-
 loop_should_break = False
 clock = Clock()
-ent = Scrap("test","img/player.png",200,200,500,500)
-ent2 = Entity("player","img/player.png",100,100,300,300)
-ent3 = Item("test3","img/player.png",200,200,900,300)
+
+
+menu = Menu(
+    screen, SCREEN_WIDTH, SCREEN_HEIGHT, "images/game_logo.png", "images/star.png"
+)
+
+menu.draw()
+
 
 while not loop_should_break:
-
-
     for evt in event.get():
         if evt.type == pygame.QUIT:
-            done = True
 
-    keys = key.get_pressed()
-    if keys[pygame.K_ESCAPE]:
-        done = True
+            loop_should_break = True
 
-    dx, dy = 0, 0
-    if keys[pygame.K_a]:
-        dx = -1
-    if keys[pygame.K_d]:
-        dx = 1
-    if keys[pygame.K_w]:
-        dy = -1
-    if keys[pygame.K_s]:
-        dy = 1
-
-    if (
-        dx != 0 and dy != 0
-    ):  # diagonal movement correction (would be too fast otherwise)
-        dx *= 0.7071  # 1/sqrt(2)
-        dy *= 0.7071
-
-    x += dx * vel
-    y += dy * vel
-    x = max(0, min(SCREEN_WIDTH - player_width, x))
-    y = max(0, min(SCREEN_HEIGHT - player_height, y))
-
-    #player_rect = player_img.get_rect(topleft=(x, y))
-    screen.fill(GREEN)
-    #screen.blit(player_img, (x, y))
+    for e in entitity_dictionary:
+        e.update()
+        e.draw()
 
 
-    ent2.set_position(x,y)
-    
-    
-    #e,c = ent2.check_collision() 
-    #if e != None:
-      #print(e)
-    #print(c)
-    print(ent.pick())
-    #print(ent3.pick(lambda:10))
-    
-       
-       
-    
     display.flip()
 
     clock.tick(60)
 
 pygame.quit()
-
