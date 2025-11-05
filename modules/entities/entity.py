@@ -1,17 +1,18 @@
 from pygame import image, transform, Surface, error
 from pygame.rect import Rect
+from colors import *
 
 
 class Entity:
 
     def __init__(
         self,
-        name: str = "empty",
-        image_path: str = "empty",
-        width: int = 200,
-        height: int = 200,
-        xpos: int = 0,
-        ypos: int = 0,
+        name="",
+        image_path="",
+        width=200,
+        height=200,
+        xpos=0,
+        ypos=0,
     ):
         self.name = name
         self.xpos = xpos
@@ -22,7 +23,7 @@ class Entity:
         except (error, FileNotFoundError) as e:
             print(f"No image at {image_path} > Item class error: {e}")
             self.image = Surface((width, height))
-            self.image.fill((0, 0, 0))
+            self.image.fill(BLACK)
 
     def __str__(self):
         return rf"{self.name}"
@@ -41,8 +42,8 @@ class Entity:
         self.xpos = xpos
         self.ypos = ypos
 
-    def draw(self, screen: Surface) -> None:
-        screen.blit(self.get_image(), self.get_position())
+    def draw(self, master: Surface) -> None:
+        master.blit(self.get_image(), self.get_position())
 
     def check_collision(self, player_pos: Rect) -> bool:
         return self.get_rect().colliderect(player_pos)
