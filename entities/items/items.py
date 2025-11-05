@@ -1,8 +1,20 @@
-from pygame import image
-from pygame import transform
-from pygame import rect
-from pygame import Surface
-from pygame import error
+from pygame import image, transform, rect, Surface, error
 from entities.entity import Entity
 class Item(Entity):
-  pass
+  
+  
+  def __init__(self, name = "empty", 
+               img_path = "empty", 
+               width = 200, 
+               height = 200, 
+               x = 0, 
+               y = 0):
+    
+    super().__init__(name, img_path, width, height, x, y)
+
+  def pick(self,func: function, entity_rect: rect.Rect)-> bool:
+        pass
+      
+    
+    
+    

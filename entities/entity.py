@@ -1,11 +1,9 @@
-from pygame import image
-from pygame import transform
-from pygame import rect
-from pygame import Surface
-from pygame import error
-
+from pygame import image, transform, rect, Surface, error
+import math
 class Entity:
 
+
+    entity_dic = {}
 
     def __init__(
         self,
@@ -26,6 +24,8 @@ class Entity:
             print(f"No image at {img_path} > Item class error: {e}")
             self.image = Surface((width, height))
             self.image.fill((0,0,0))
+        Entity.entity_dic[self.name] = self
+        
 
     def __str__(self):
         return f"{self.name}"
@@ -47,5 +47,21 @@ class Entity:
     def draw_item(self, screen: Surface) -> None:
         screen.blit(self.get_img(), self.get_position())
 
-    def check_collision(self, player_pos: rect.Rect) -> bool:
-        return self.get_rect().colliderect(player_pos)
+
+    def check_collision(self) -> bool:
+        for key in Entity.entity_dic:
+            if Entity.entity_dic[key] is not self:
+               if self.get_rect().colliderect(Entity.entity_dic[key].get_rect()):
+                    return True
+            else:
+                 continue
+        return False
+        
+
+
+            
+    
+
+            
+
+             
