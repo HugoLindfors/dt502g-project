@@ -48,14 +48,14 @@ class Entity:
         screen.blit(self.get_img(), self.get_position())
 
 
-    def check_collision(self) -> bool:
+    def check_collision(self) -> tuple["Entity | None", bool]:
         for key in Entity.entity_dic:
             if Entity.entity_dic[key] is not self:
                if self.get_rect().colliderect(Entity.entity_dic[key].get_rect()):
-                    return True
+                    return (Entity.entity_dic[key], True)
             else:
                  continue
-        return False
+        return (None, False)
         
 
 

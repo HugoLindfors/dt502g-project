@@ -85,9 +85,11 @@ while not loop_should_break:
     ent3.draw_item(screen)
     
     
-    
-
-    print(ent2.check_collision())    
+    e, c = ent2.check_collision() 
+    if e != None:
+      print(e.get_rect())
+    print(c)
+       
        
     
     display.flip()
