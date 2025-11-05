@@ -8,12 +8,18 @@ class Item(Entity):
                width = 200, 
                height = 200, 
                x = 0, 
-               y = 0):
-    
+               y = 0,
+               target_entity_detect = "player"
+               ):
+    self.target_entity_detect = target_entity_detect
     super().__init__(name, img_path, width, height, x, y)
+  
+  # overwrite function in subclass 
+  def pick(self):
+    pass
 
-  def pick(self,func: function, entity_rect: rect.Rect)-> bool:
-        pass
+
+     
       
     
     

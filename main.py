@@ -2,8 +2,8 @@
 import pygame
 from pygame import display, event, image, key, transform
 from pygame.time import Clock
-#from entities.items.items import Item
-#from entities.items.scrap import Scrap
+from entities.items.items import Item
+from entities.items.scrap import Scrap
 from entities.entity import Entity
 # STATIC VARIABLES
 BLACK = (0, 0, 0)
@@ -38,9 +38,9 @@ vel = 10
 
 loop_should_break = False
 clock = Clock()
-ent = Entity("test","img/player.png",200,200,500,500)
-ent2 = Entity("test2","img/player.png",100,100,300,300)
-ent3 = Entity("test3","img/player.png",200,200,900,300)
+ent = Scrap("test","img/player.png",200,200,500,500)
+ent2 = Entity("player","img/player.png",100,100,300,300)
+ent3 = Item("test3","img/player.png",200,200,900,300)
 
 while not loop_should_break:
 
@@ -78,17 +78,17 @@ while not loop_should_break:
     screen.fill(GREEN)
     #screen.blit(player_img, (x, y))
 
-    ent2.draw_item(screen)  
-    ent2.set_position(x,y)
 
-    ent.draw_item(screen)
-    ent3.draw_item(screen)
+    ent2.set_position(x,y)
     
     
-    e, c = ent2.check_collision() 
-    if e != None:
-      print(e.get_rect())
-    print(c)
+    #e,c = ent2.check_collision() 
+    #if e != None:
+      #print(e)
+    #print(c)
+    print(ent.pick())
+    #print(ent3.pick(lambda:10))
+    
        
        
     

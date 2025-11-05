@@ -47,7 +47,6 @@ class Entity:
     def draw_item(self, screen: Surface) -> None:
         screen.blit(self.get_img(), self.get_position())
 
-
     def check_collision(self) -> tuple["Entity | None", bool]:
         for key in Entity.entity_dic:
             if Entity.entity_dic[key] is not self:
