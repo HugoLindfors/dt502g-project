@@ -1,25 +1,28 @@
 import random
-import pygame.font as pygame_font
+import pygame
+from pygame import font
 from pygame import display, image, transform, Surface
-from colors import *
+from modules.colors import *
+import pygame
+from pygame.locals import *
 
 
 # MENU CLASS
 class Menu:
-    screen: Surface
+    master: Surface
     screen_width: int
     screen_height: int
 
     def __init__(
         self,
-        screen: Surface,
+        master: Surface,
         screen_width: int,
         screen_height: int,
         title_image_path: str,
         star_image_path: str,
-        star_count=50,
+        star_count=50,  # optional
     ):
-        self.screen = screen
+        self.master = master
         self.screen_width = screen_width
         self.screen_height = screen_height
 
@@ -46,22 +49,24 @@ class Menu:
 
     # DRAW START MENU
     def draw(self):
-        self.screen.fill(BLACK)
+        self.master.fill(BLACK)
 
         # DRAW STARS
         for star_pos in self.star_positions:
-            self.screen.blit(self.star_image, star_pos)
+            self.master.blit(self.star_image, star_pos)
 
         # DRAW GAME LOGO
-        self.screen.blit(self.title_image, self.title_rect)
+        self.master.blit(self.title_image, self.title_rect)
 
         # DRAW "PRESS ENTER TO START"
-        pygame_font.SysFont(None, 60)
-        text = pygame_font.render("Press ENTER to Start", True, WHITE)
+        pygame.font.init()
+        pygame.font.init()
+        font = pygame.font.SysFont("ActionIsShaded", 12)
+        text = font.render("Press ENTER to Start", True, WHITE)
         text_rect = text.get_rect(
             center=(self.screen_width // 2, self.screen_height // 1.6)
         )
-        self.screen.blit(text, text_rect)
+        self.master.blit(text, text_rect)
 
         # UPDATE DISPLAY
         display.flip()

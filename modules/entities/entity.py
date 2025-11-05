@@ -1,49 +1,57 @@
-from pygame import image, transform, Surface, error
-from pygame.rect import Rect
-from colors import *
+from pygame import image, transform, rect, Surface, error
+import math
 
 
 class Entity:
 
+    entity_dic = {}
+
     def __init__(
         self,
-        name="",
-        image_path="",
-        width=200,
-        height=200,
-        xpos=0,
-        ypos=0,
+        name: str = "empty",
+        img_path: str = "empty",
+        width: int = 200,
+        height: int = 200,
+        x: int = 0,
+        y: int = 0,
     ):
         self.name = name
-        self.xpos = xpos
-        self.ypos = ypos
+        self.x = x
+        self.y = y
         try:
-            self.image = image.load(image_path)
+            self.image = image.load(img_path)
             self.image = transform.scale(self.image, (width, height))
         except (error, FileNotFoundError) as e:
-            print(f"No image at {image_path} > Item class error: {e}")
+            print(f"No image at {img_path} > Item class error: {e}")
             self.image = Surface((width, height))
-            self.image.fill(BLACK)
+            self.image.fill((0, 0, 0))
+        Entity.entity_dic[self.name] = self
 
     def __str__(self):
-        return rf"{self.name}"
+        return f"{self.name}"
 
     def get_position(self) -> tuple[int, int]:
-        return self.xpos, self.ypos
+        return self.x, self.y
 
-    def get_image(self):
+    def get_img(self):
         return self.image
 
-    def get_rect(self) -> Rect:
+    def get_rect(self) -> rect.Rect:
         hitbox_x, hitbox_y = self.get_position()
-        return self.get_image().get_rect(topleft=(hitbox_x, hitbox_y))
+        return self.get_img().get_rect(topleft=(hitbox_x, hitbox_y))
 
-    def set_position(self, xpos: int, ypos: int) -> None:
-        self.xpos = xpos
-        self.ypos = ypos
+    def set_position(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
 
-    def draw(self, master: Surface) -> None:
-        master.blit(self.get_image(), self.get_position())
+    def draw_item(self, screen: Surface) -> None:
+        screen.blit(self.get_img(), self.get_position())
 
-    def check_collision(self, player_pos: Rect) -> bool:
-        return self.get_rect().colliderect(player_pos)
+    def check_collision(self) -> tuple["Entity | None", bool]:
+        for key in Entity.entity_dic:
+            if Entity.entity_dic[key] is not self:
+                if self.get_rect().colliderect(Entity.entity_dic[key].get_rect()):
+                    return (Entity.entity_dic[key], True)
+            else:
+                continue
+        return (None, False)
