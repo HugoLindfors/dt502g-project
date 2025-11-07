@@ -1,8 +1,14 @@
+<<<<<<< Updated upstream:entities/enemies/enemy.py
 from entities import Entity
 from entities.items import Item
 from entities.items import Scrap
 import threading
 import time
+=======
+from modules.entities.entity import Entity
+from modules.entities.items.scrap import Scrap
+from pygame import Surface
+>>>>>>> Stashed changes:modules/entities/enemies/enemy.py
 
 """enemy.py: A template for creating enemy entities."""
 
@@ -50,14 +56,18 @@ class Enemy(Entity):
         # Spawn position
         self.set_position(x, y)
 
-        # Events
-        self.alive_event = threading.Event()
-        self.health_lock = threading.Lock()
+    def update(self, screen: Surface):
 
-        self.move_thread = threading.Thread(target=self.move, daemon=True)
-        self.fire_thread = threading.Thread(target=self.fire, daemon=True)
-        self.alive_thread = threading.Thread(target=self.alive, daemon=True)
+        # Alive
+        if self.enemy_health <= 0:
+            
+            # Turn the enemy into a scrap
+            Scrap("scrape","images/scrap.png",200,200,self.x,self.y)
+            
+            # Remove the enemy
+            Entity.entity_dic.pop(self.name)
 
+<<<<<<< Updated upstream:entities/enemies/enemy.py
         self.move_thread.start()
         self.fire_thread.start()
         self.alive_thread.start()
@@ -66,14 +76,18 @@ class Enemy(Entity):
     def move(self):
         while not self.alive_event.is_set():
             if self.x <= self.enemy_maximum_allowed_left:
+=======
+        # Move
+        if self.x <= self.enemy_maximum_allowed_left:
+>>>>>>> Stashed changes:modules/entities/enemies/enemy.py
                 self.enemy_x_moving_direction = 1
-            elif self.x >= self.enemy_maximum_allowed_right:
+        elif self.x >= self.enemy_maximum_allowed_right:
                 self.enemy_x_moving_direction = -1
 
-            self.x += self.enemy_x_moving_direction
-            self.y += self.enemy_y_moving_direction
-            time.sleep(self.tick)
+        self.x += self.enemy_x_moving_direction
+        self.y += self.enemy_y_moving_direction
 
+<<<<<<< Updated upstream:entities/enemies/enemy.py
     """ Lifetime of the enemy """
     def alive(self):
         while not self.alive_event.is_set():
@@ -108,3 +122,7 @@ class Enemy(Entity):
     def setHealth(self, health: int):
         with self.health_lock:
             self.enemy_health = health
+=======
+        # Fire projectile here
+
+>>>>>>> Stashed changes:modules/entities/enemies/enemy.py

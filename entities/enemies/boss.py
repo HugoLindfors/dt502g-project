@@ -8,12 +8,12 @@ class Boss(Enemy):
 
     def __init__(self):
 
-        self.name = "Boss"
-        self.img_path = "images/boss.jpg"
-        self.width = 100
-        self.height = 100
-        self.x = 50
-        self.y = 50
-        self.health = 30
+        name = "Boss"
+        img_path = "images/boss.jpg"
+        width = 100
+        height = 100
+        x = 50
+        y = 50
+        health = 30
 
-        super().__init__()
+        super().__init__(name,img_path,width,height,x,y, health)
