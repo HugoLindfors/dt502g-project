@@ -48,7 +48,7 @@ class Enemy(Entity):
         self.enemy_maximum_allowed_left = x - self.enemy_maximum_allowed_left
 
         # Spawn position
-        self.setPosition(x, y)
+        self.set_position(x, y)
 
         # Events
         self.alive_event = threading.Event()
