@@ -62,7 +62,7 @@ class Menu:
 
         # DRAW "Press ENTER to Restart" TEXT
         font = pygame.font.SysFont(None, 60)
-        text = font.render("Press ENTER to Restart", True, (255, 255, 255))
+        text = font.render("Press ENTER to Restart or ESC to Quit", True, (255, 255, 255))
         text_rect = text.get_rect(center=(self.screen_width // 2, self.screen_height // 1.6))
         self.screen.blit(text, text_rect)
 
