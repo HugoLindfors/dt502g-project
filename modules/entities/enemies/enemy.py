@@ -1,8 +1,8 @@
-from entities import Entity
-from entities.items import Item
-from entities.items import Scrap
+from modules.entities.entity import Entity
+from modules.entities.items.items import Item
+from modules.entities.items.scrap import Scrap
 import threading
-import time
+import time 
 
 """enemy.py: A template for creating enemy entities."""
 
@@ -40,7 +40,7 @@ class Enemy(Entity):
         y: int,
         health: int,
     ):
-        super().__init__()
+        super().__init__(name,img_path,width,height,x,y)
 
         # Entity class variables
         self.name = name
@@ -60,7 +60,7 @@ class Enemy(Entity):
         self.enemy_maximum_allowed_left = x - self.enemy_maximum_allowed_left
 
         # Spawn position
-        self.setPosition(x, y)
+        self.set_position(x, y)
 
         # Events
         self.alive_event = threading.Event()
@@ -96,9 +96,8 @@ class Enemy(Entity):
                     # Stop all activity for the enemy
                     self.alive_event.set()
                     # Turn the enemy into a scrap
-                    scrap = Scrap(Item())
-                    scrap.x = self.x
-                    scrap.y = self.y
+                    scrap = Scrap(200,200,0,0)
+                    scrap.set_position(self.x,self.y)
                     # Remove the enemy
                     # Code to access the entity list and remove the enemy goes here
                     break

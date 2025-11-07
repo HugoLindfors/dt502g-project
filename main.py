@@ -4,7 +4,7 @@ import os
 """
 This allows the code to omit the first modules folder from the imports, i.e. import entities instead of import modules.entities.
 """
-modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".modules"))
+modules_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules"))
 sys.path.insert(0, modules_path)
 
 from math import sqrt
@@ -15,7 +15,9 @@ from pygame.time import Clock
 from modules.entities.entity import Entity
 from modules.colors import *
 from modules.gui.menu import Menu
-
+from modules.entities.enemies.enemy import Enemy
+from modules.entities.player.player import Player
+from modules.entities.items.items import Item
 entitity_dictionary = Entity.entity_dic
 
 BLACK = Color(0, 0, 0)
@@ -47,17 +49,27 @@ menu = Menu(
 
 menu.draw()
 
+player = Player(500,500,"images/player.png",)
+
+for index in range(10):
+    Enemy(f"enemy{index}","images/player.png",100,100,200,100,1)
 
 while not loop_should_break:
     for evt in event.get():
         if evt.type == pygame.QUIT:
 
             loop_should_break = True
-
-    for e in entitity_dictionary:
-        e.update()
-        e.draw()
-
+    
+    player.handle_movement(pygame.key.get_pressed(),screen.get_width())
+       
+    screen.fill((0, 0, 0))
+    player.draw(screen)
+    
+    print(Entity.entity_dic)
+    for key in Entity.entity_dic:
+        Entity.entity_dic[key].draw_item(screen)
+        Entity.entity_dic[key].update(screen)
+    
 
     display.flip()
 

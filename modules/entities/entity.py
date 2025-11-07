@@ -25,6 +25,7 @@ class Entity:
             self.image = Surface((width, height))
             self.image.fill((0, 0, 0))
         Entity.entity_dic[self.name] = self
+        print(Entity.entity_dic)
 
     def __str__(self):
         return f"{self.name}"
@@ -45,6 +46,10 @@ class Entity:
 
     def draw_item(self, screen: Surface) -> None:
         screen.blit(self.get_img(), self.get_position())
+    
+    def update(self,screen: Surface):
+        pass
+
 
     def check_collision(self) -> tuple["Entity | None", bool]:
         for key in Entity.entity_dic:

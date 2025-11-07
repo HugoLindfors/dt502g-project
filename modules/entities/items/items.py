@@ -1,5 +1,5 @@
 from pygame import image, transform, rect, Surface, error
-from entities.entity import Entity
+from modules.entities.entity import Entity
 class Item(Entity):
   
   
@@ -12,5 +12,12 @@ class Item(Entity):
     
     super().__init__(name, img_path, width, height, x, y)
 
-  def pick(self,func: function, entity_rect: rect.Rect)-> bool:
+  def pick(self)-> bool:
         pass
+  
+  def update(self,screen: Surface):
+        for key in list(Entity.entity_dic):
+          x,y = Entity.entity_dic[key].get_position()
+          Entity.entity_dic[key].set_position(x,y+2)
+          if y >= screen.get_height():
+              del Entity.entity_dic[key]

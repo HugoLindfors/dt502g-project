@@ -1,8 +1,7 @@
 import pygame
 from pygame import image, transform
 
-
-class Player:
+class Player():
     def __init__(self, x, y, image_path, width=80, height=80):
         self.x = x
         self.y = y

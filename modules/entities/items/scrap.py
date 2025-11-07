@@ -9,8 +9,7 @@ class Scrap(Item):
 
     scrap_counter = 0
 
-    def __init__(self, name = "empty", 
-               img_path = "empty", 
+    def __init__(self,  
                width = 200, 
                height = 200, 
                x = 0, 
@@ -19,7 +18,7 @@ class Scrap(Item):
                ):     
         self.target_entity_detect = target_entity_detect 
         self.scrap_counter = 0
-        super().__init__(name, img_path, width, height, x, y)
+        super().__init__("scrap", image_path, width, height, x, y)
         
     def pick(self) -> int:
         e,c = self.check_collision()
