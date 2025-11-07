@@ -1,7 +1,7 @@
 import pygame
 from pygame import image, transform
 from modules.entities.entity import Entity
-
+from modules.entities.projectiles.projectile import Laser
 player_id = "player"
 class Player(Entity):
     def __init__(self, x, y, image_path, width=80, height=80):
@@ -22,4 +22,12 @@ class Player(Entity):
             dx = 1
         x += dx * self.v
         self.set_position(max(0, min(screen_width - width, x)),y)
+
+
+    def fire(self,keys,event):
+        x,y = self.get_position()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            Laser("laser","images/projNew.png",10,30,x,y-5)
+
+            
 

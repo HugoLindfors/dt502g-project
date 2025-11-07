@@ -5,6 +5,8 @@ class Entity:
 
     entity_dic = {}
 
+    dt = 0
+
     def __init__(
         self,
         name: str = "empty",
@@ -46,10 +48,12 @@ class Entity:
 
     def draw_item(self, screen: Surface) -> None:
         screen.blit(self.get_img(), self.get_position())
-    
+    #overwrite the function if you want
     def update(self,screen: Surface):
         pass
-
+    
+    def pass_dt(a:float):
+        Entity.dt = a
 
     def check_collision(self) -> tuple["Entity | None", bool]:
         for key in Entity.entity_dic:

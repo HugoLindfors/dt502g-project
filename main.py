@@ -30,7 +30,7 @@ CYAN = Color(0, 255, 255)
 BLUE = Color(0, 0, 255)
 MAGENTA = Color(255, 0, 255)
 WHITE = Color(255, 255, 255)
-
+FPS = 60
 
 pygame.init()
 
@@ -52,23 +52,33 @@ menu.draw()
 
 player = Player(500,500,"images/player.png",80,80)
 
-Enemy("enem","images/player.png",100,100,500,200,1)
+Enemy("enem","images/player.png",100,100,500,101,1)
 #Scrap(f"scrap","images/scrap.png",100,100,200,100,)
+
 while not loop_should_break:
     for evt in event.get():
+        player.fire(pygame.key.get_pressed(),evt)
         if evt.type == pygame.QUIT:
 
             loop_should_break = True
-    
+        
     player.handle_movement(pygame.key.get_pressed(),screen.get_width())
-       
+
+    Entity.pass_dt(clock.tick(FPS)/1000)
+
+
+    
     screen.fill((0, 0, 0))
     
     for key in list(Entity.entity_dic):
-        Entity.entity_dic[key].draw_item(screen)
-        Entity.entity_dic[key].update(screen)
+        if not Entity.entity_dic:
+            continue
+
         if isinstance(Entity.entity_dic[key],Item):
             Entity.entity_dic[key].pick()
+
+        Entity.entity_dic[key].draw_item(screen)
+        Entity.entity_dic[key].update(screen)
     
 
     display.flip()
