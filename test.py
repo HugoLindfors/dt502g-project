@@ -24,15 +24,16 @@ menu = Menu(screen, SCREEN_WIDTH, SCREEN_HEIGHT, "images/game_logo.png", "images
 health_bar = health_bar(screen, max_health=3, heart_image_path="images/heart.png",
                        gray_heart_image_path="images/gray_heart.png")
 # CREATE SCORE INSTANCE
-player_score = score(x=20, y=20, width=160, height=60, font_size=36)
+player_score = score(20, 20)
 
 # GAME STATE
 loop_should_break = False
 game_started = False
+game_over = False
 clock = Clock()
 
 
-health_bar.lose_health(2) # losing heart test
+# health_bar.lose_health(2) # losing heart test
 
 # MAIN LOOP
 while not loop_should_break:
@@ -40,25 +41,47 @@ while not loop_should_break:
         if evt.type == pygame.QUIT:
             loop_should_break = True
         elif evt.type == pygame.KEYDOWN:
+            # START MENU
             if not game_started:
                 if evt.key == pygame.K_RETURN:
                     game_started = True
                 elif evt.key == pygame.K_ESCAPE:
                     loop_should_break = True
-            else:
+            # GAMEPLAY
+            elif not game_over:
                 if evt.key == pygame.K_ESCAPE:
                     loop_should_break = True
-                #TEST
-                elif evt.key == pygame.K_1:
-                    player_score.add_points(1)
+                # TEST: lose health
+                elif evt.key == pygame.K_h:
+                    health_bar.lose_health(1)
+                    if health_bar.current_health <= 0:
+                        game_over = True
+                # TEST: add points
                 elif evt.key == pygame.K_5:
                     player_score.add_points(50)
                 elif evt.key == pygame.K_0:
                     player_score.reset_score()
+            # GAME OVER
+            elif game_over:
+                if evt.key == pygame.K_ESCAPE:
+                    loop_should_break = True
+                elif evt.key == pygame.K_RETURN:
+                    # RESET EVERYTHING
+                    player_score.reset_score()
+                    health_bar.set_health(3)
+                    player.x = 200
+                    player.y = SCREEN_HEIGHT - 80 - 20
+                    game_over = False
 
     # START MENU
     if not game_started:
         menu.draw()
+        clock.tick(60)
+        continue
+    
+    # GAME OVER SCREEN
+    if game_over:
+        menu.draw_game_over()
         clock.tick(60)
         continue
 
@@ -71,10 +94,6 @@ while not loop_should_break:
     health_bar.draw()
     player_score.draw(screen)
     player.draw(screen)
-    
-
-  
-
 
     display.flip()
     clock.tick(60)
