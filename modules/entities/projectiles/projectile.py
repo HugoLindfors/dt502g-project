@@ -10,10 +10,12 @@ class Laser(Entity):
         height: int = 200,
         x: int = 0,
         y: int = 0,
+        Imune_entity_id: str = "player"
                 ):
         Laser.laser_instance_index += 1
         super().__init__(f"{name}{Laser.laser_instance_index}",img_path,width,height,x,y)
         self.speed = -1000
+        self.Imune_entity_id = Imune_entity_id
         
 
     def update(self,screen: Surface):
@@ -25,6 +27,6 @@ class Laser(Entity):
         
         e,c = self.check_collision()
 
-        if c and e.name != "player":
+        if c and e.name != self.Imune_entity_id:
             Entity.entity_dic.pop(e.name)
             
