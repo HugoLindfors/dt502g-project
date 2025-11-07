@@ -15,12 +15,12 @@ from modules.entities.entity import Entity
 from modules.colors import *
 from modules.gui.menu import Menu
 from modules.keybindings import *
-from pygame import KEYDOWN as KEYDN, QUIT
+from pygame import KEYDOWN, QUIT
 from modules.entities.player.player import Player
 
 
 def main():
-    entitity_dictionary = Entity.entity_dic
+    entititities = Entity.entity_dic
 
     pygame.init()
 
@@ -44,7 +44,7 @@ def main():
         for evt in event.get():
             if evt.type == QUIT:
                 loop_should_break = True
-            elif evt.type == KEYDN:
+            elif evt.type == KEYDOWN:
                 if not game_started:
                     if evt.key == ENTER:
                         game_started = True
@@ -59,15 +59,15 @@ def main():
             clock.tick(60)
             continue
 
-        keys_pressed = key.get_pressed()
-        player.handle_movement(keys_pressed, SCREEN_WIDTH)
+        keydown = key.get_pressed()
+        player.move(keydown, SCREEN_WIDTH)
 
         screen.fill(color=BLACK)
         player.draw(master=screen)
 
-        for e in entitity_dictionary:
-            e.update()
-            e.draw()
+        for entity in entitities:
+            entity.update()
+            entity.draw()
 
         display.flip()
 
