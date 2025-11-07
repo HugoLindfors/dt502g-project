@@ -16,8 +16,5 @@ class Item(Entity):
         pass
   
   def update(self,screen: Surface):
-        for key in list(Entity.entity_dic):
-          x,y = Entity.entity_dic[key].get_position()
-          Entity.entity_dic[key].set_position(x,y+2)
-          if y >= screen.get_height():
-              del Entity.entity_dic[key]
+      x,y = self.get_position()
+      self.set_position(x,y+2)

@@ -25,7 +25,7 @@ class Enemy(Entity):
     enemy_maximum_horizontal_movement = (
         10  # Both left and right from the spawn position
     )
-    enemy_y_moving_direction = -1  # The enemy moves downwards
+    enemy_y_moving_direction = 1  # The enemy moves downwards
 
     # Changing variables
     enemy_x_moving_direction = -1
@@ -88,7 +88,7 @@ class Enemy(Entity):
             time.sleep(self.tick)
 
     """ Lifetime of the enemy """
-
+    
     def alive(self):
         while not self.alive_event.is_set():
             with self.health_lock:
@@ -96,8 +96,8 @@ class Enemy(Entity):
                     # Stop all activity for the enemy
                     self.alive_event.set()
                     # Turn the enemy into a scrap
-                    scrap = Scrap(200,200,0,0)
-                    scrap.set_position(self.x,self.y)
+                    Scrap("scrape","images/scrap.png",200,200,self.x,self.y)
+            
                     # Remove the enemy
                     # Code to access the entity list and remove the enemy goes here
                     break
