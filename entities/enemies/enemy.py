@@ -73,6 +73,7 @@ class Enemy(Entity):
         # Fire projectiles
         if self.enemy_fires_projectiles == True:
              # Fire projectile here
+             pass
 
         # Alive
         if self.enemy_health <= 0:
