@@ -1,4 +1,4 @@
-from entities import Enemy
+from entities.enemies.enemy import Enemy
 
 """enemy.py: A special case of the class enemy"""
 

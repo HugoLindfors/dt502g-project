@@ -1,14 +1,6 @@
-<<<<<<< Updated upstream:entities/enemies/enemy.py
-from entities import Entity
-from entities.items import Item
-from entities.items import Scrap
-import threading
-import time
-=======
 from modules.entities.entity import Entity
 from modules.entities.items.scrap import Scrap
 from pygame import Surface
->>>>>>> Stashed changes:modules/entities/enemies/enemy.py
 
 """enemy.py: A template for creating enemy entities."""
 
@@ -16,9 +8,9 @@ __author__ = "Gustav Vising"
 
 class Enemy(Entity):
 
-    tick = 1 / 60 # Sleep delay for updating the enemy
+    tick = 1 / 60  # Sleep delay for updating the enemy
 
-    # Variables that will be initialized 
+    # Variables that will be initialized
     enemy_health = -1
     enemy_spawn_position_x = -1
     enemy_spawn_position_y = -1
@@ -27,14 +19,25 @@ class Enemy(Entity):
 
     # Constants
     enemy_delay_between_fire = 3  # Seconds between firing projectiles
-    enemy_maximum_horizontal_movement = 10  # Both left and right from the spawn position
-    enemy_y_moving_direction = -1 # The enemy moves downwards
+    enemy_maximum_horizontal_movement = (
+        10  # Both left and right from the spawn position
+    )
+    enemy_y_moving_direction = 1  # The enemy moves downwards
 
     # Changing variables
     enemy_x_moving_direction = -1
 
-    def __init__(self, name: str, img_path: str, width: int, height: int, x: int, y: int, health: int):
-        super().__init__()
+    def __init__(
+        self,
+        name: str,
+        img_path: str,
+        width: int,
+        height: int,
+        x: int,
+        y: int,
+        health: int,
+    ):
+        super().__init__(name,img_path,width,height,x,y)
 
         # Entity class variables
         self.name = name
@@ -58,6 +61,17 @@ class Enemy(Entity):
 
     def update(self, screen: Surface):
 
+        # Move
+        if self.x <= self.enemy_maximum_allowed_left:
+                self.enemy_x_moving_direction = 1
+        elif self.x >= self.enemy_maximum_allowed_right:
+                self.enemy_x_moving_direction = -1
+
+        self.x += self.enemy_x_moving_direction
+        self.y += self.enemy_y_moving_direction
+
+        # Fire projectile here
+
         # Alive
         if self.enemy_health <= 0:
             
@@ -67,62 +81,3 @@ class Enemy(Entity):
             # Remove the enemy
             Entity.entity_dic.pop(self.name)
 
-<<<<<<< Updated upstream:entities/enemies/enemy.py
-        self.move_thread.start()
-        self.fire_thread.start()
-        self.alive_thread.start()
-
-    """ Update the enemy location """
-    def move(self):
-        while not self.alive_event.is_set():
-            if self.x <= self.enemy_maximum_allowed_left:
-=======
-        # Move
-        if self.x <= self.enemy_maximum_allowed_left:
->>>>>>> Stashed changes:modules/entities/enemies/enemy.py
-                self.enemy_x_moving_direction = 1
-        elif self.x >= self.enemy_maximum_allowed_right:
-                self.enemy_x_moving_direction = -1
-
-        self.x += self.enemy_x_moving_direction
-        self.y += self.enemy_y_moving_direction
-
-<<<<<<< Updated upstream:entities/enemies/enemy.py
-    """ Lifetime of the enemy """
-    def alive(self):
-        while not self.alive_event.is_set():
-            with self.health_lock:
-                if self.enemy_health <= 0:
-                    # Stop all activity for the enemy
-                    self.alive_event.set()
-                    # Turn the enemy into a scrap
-                    scrap = Scrap(Item())
-                    scrap.x = self.x
-                    scrap.y = self.y
-                    # Remove the enemy
-                    # Code to access the entity list and remove the enemy goes here
-                    break
-            time.sleep(self.tick)
-
-    """ The enemy fires projectiles to attack the player """
-    def fire(self):
-        while not self.alive_event.is_set():
-            # TODO: Implement projectile firing
-            time.sleep(self.enemy_delay_between_fire)
-
-    """Called when the enemy is hit by a projectile."""
-    def hit(self):
-        with self.health_lock:
-            self.enemy_health -= 1
-
-    def getHealth(self):
-        with self.health_lock:
-            return self.enemy_health
-
-    def setHealth(self, health: int):
-        with self.health_lock:
-            self.enemy_health = health
-=======
-        # Fire projectile here
-
->>>>>>> Stashed changes:modules/entities/enemies/enemy.py
