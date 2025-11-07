@@ -8,8 +8,6 @@ __author__ = "Gustav Vising"
 
 class Enemy(Entity):
 
-    tick = 1 / 60  # Sleep delay for updating the enemy
-
     # Variables that will be initialized
     enemy_health = -1
     enemy_spawn_position_x = -1
