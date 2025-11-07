@@ -9,7 +9,7 @@ class Boss(Enemy):
     def __init__(self):
 
         name = "Boss"
-        img_path = "images/boss.jpg"
+        img_path = "images/ship.png"
         width = 100
         height = 100
         x = 50
