@@ -15,5 +15,6 @@ class Boss(Enemy):
         x = 50
         y = 50
         health = 30
+        projectiles = True
 
-        super().__init__(name,img_path,width,height,x,y, health)
+        super().__init__(name,img_path,width,height,x,y, health, projectiles)

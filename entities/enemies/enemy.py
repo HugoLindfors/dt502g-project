@@ -34,6 +34,7 @@ class Enemy(Entity):
         x: int,
         y: int,
         health: int,
+        fires_projectiles: bool
     ):
         super().__init__(name,img_path,width,height,x,y)
 
@@ -49,6 +50,7 @@ class Enemy(Entity):
         self.enemy_health = health
         self.enemy_spawn_position_x = x
         self.enemy_spawn_position_y = y
+        self.enemy_fires_projectiles = fires_projectiles
 
         # Calculate values
         self.enemy_maximum_allowed_right = x + self.enemy_maximum_allowed_right
@@ -68,7 +70,9 @@ class Enemy(Entity):
         self.x += self.enemy_x_moving_direction
         self.y += self.enemy_y_moving_direction
 
-        # Fire projectile here
+        # Fire projectiles
+        if self.enemy_fires_projectiles == True:
+             # Fire projectile here
 
         # Alive
         if self.enemy_health <= 0:

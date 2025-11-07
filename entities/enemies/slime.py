@@ -15,5 +15,6 @@ class Slime(Enemy):
         x = 50
         y = 50
         health = 1
+        projectiles = False
 
-        super().__init__(name,img_path,width,height,x,y, health)
+        super().__init__(name,img_path,width,height,x,y, health, projectiles)
