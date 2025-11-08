@@ -53,7 +53,7 @@ menu.draw()
 player = Player(500,500,"images/player.png",80,80)
 
 Enemy("enem","images/player.png",100,100,500,101,1)
-#Scrap(f"scrap","images/scrap.png",100,100,200,100,)
+Scrap(f"scrap","images/scrap.png",100,100,200,100,)
 
 while not loop_should_break:
     for evt in event.get():
@@ -66,16 +66,16 @@ while not loop_should_break:
 
     Entity.pass_dt(clock.tick(FPS)/1000)
 
-
+    print(Entity.entity_dic)
     
     screen.fill((0, 0, 0))
     
     for key in list(Entity.entity_dic):
-        if not Entity.entity_dic:
-            continue
-
         if isinstance(Entity.entity_dic[key],Item):
             Entity.entity_dic[key].pick()
+
+        if key not in Entity.entity_dic:
+            continue
 
         Entity.entity_dic[key].draw_item(screen)
         Entity.entity_dic[key].update(screen)
